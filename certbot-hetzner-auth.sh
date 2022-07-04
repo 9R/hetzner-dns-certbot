@@ -1,6 +1,12 @@
 #!/bin/bash
 
-token=$(cat /etc/hetzner-dns-token)
+if [ -n "$TOKEN" ]; then
+  # To use this run 'export $TOKEN=foo'before runing certbot
+  token=$TOKEN
+else
+  token=$(cat /etc/hetzner-dns-token)
+fi
+
 search_name=$( echo $CERTBOT_DOMAIN | rev | cut -d'.' -f 1,2 | rev)
 
 zone_id=$(curl \
